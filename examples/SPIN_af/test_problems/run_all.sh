@@ -23,3 +23,10 @@ cd validation_nve/
 ./run-test-nve.sh
 rm nve_spin_lattice.pdf res_lammps.dat
 cd ..
+
+# test 5: NVT run, test Etot preservation
+cd validation_nve/
+./run-test-nvT.sh
+rm nvT_spin_lattice.pdf res_lammps.dat
+cd ..
+
