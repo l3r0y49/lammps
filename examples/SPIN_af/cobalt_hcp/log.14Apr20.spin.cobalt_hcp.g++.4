@@ -1,0 +1,38 @@
+LAMMPS (17 Feb 2022)
+# hcp cobalt in a 3d periodic box
+
+clear
+units	 	metal
+atom_style 	spin
+
+dimension 	3
+boundary 	p p p
+
+# necessary for the serial algorithm (sametag)
+atom_modify 	map array
+
+lattice 	hcp 2.5071
+Lattice spacing in x,y,z = 2.5071 4.3424246 4.0940772
+region 		box block 0.0 5.0 0.0 5.0 0.0 5.0
+create_box 	1 box
+Created orthogonal box = (0 0 0) to (12.5355 21.712123 20.470386)
+  1 by 1 by 1 MPI processor grid
+create_atoms 	1 box
+Created 500 atoms
+  using lattice units in orthogonal box = (0 0 0) to (12.5355 21.712123 20.470386)
+  create_atoms CPU = 0.001 seconds
+
+# setting mass, mag. moments, and interactions for hcp cobalt
+
+mass		1 58.93
+
+set 		group all spin/random 31 1.72
+Setting atom values ...
+  500 settings made for spin/random
+#set 		group all spin 1.72 0.0 0.0 1.0
+velocity 	all create 100 4928459 rot yes dist gaussian
+
+#pair_style 	hybrid/overlay eam/alloy spin/exchange 4.0 spin/neel 4.0
+pair_style 	hybrid/overlay eam/alloy spin/exchange 4.0
+ERROR: Unrecognized pair style 'eam/alloy' is part of the MANYBODY package which is not enabled in this LAMMPS binary. (../force.cpp:279)
+Last command: pair_style 	hybrid/overlay eam/alloy spin/exchange 4.0

@@ -1,0 +1,37 @@
+LAMMPS (17 Feb 2022)
+# bcc iron in a 3d periodic box
+
+clear
+units 		metal
+atom_style 	spin
+
+dimension 	3
+boundary 	p p p
+
+# necessary for the serial algorithm (sametag)
+atom_modify 	map array
+
+lattice 	bcc 2.8665
+Lattice spacing in x,y,z = 2.8665 2.8665 2.8665
+region 		box block 0.0 5.0 0.0 5.0 0.0 5.0
+create_box 	1 box
+Created orthogonal box = (0 0 0) to (14.3325 14.3325 14.3325)
+  1 by 1 by 1 MPI processor grid
+create_atoms 	1 box
+Created 250 atoms
+  using lattice units in orthogonal box = (0 0 0) to (14.3325 14.3325 14.3325)
+  create_atoms CPU = 0.001 seconds
+
+# setting mass, mag. moments, and interactions for bcc iron
+
+mass		1 55.845
+
+set 		group all spin/random 31 2.2
+Setting atom values ...
+  250 settings made for spin/random
+# set 		group all spin 2.2 0.0 0.0 1.0
+velocity 	all create 100 4928459 rot yes dist gaussian
+
+pair_style 	hybrid/overlay eam/alloy spin/exchange 3.5
+ERROR: Unrecognized pair style 'eam/alloy' is part of the MANYBODY package which is not enabled in this LAMMPS binary. (../force.cpp:279)
+Last command: pair_style 	hybrid/overlay eam/alloy spin/exchange 3.5

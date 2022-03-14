@@ -1,0 +1,22 @@
+LAMMPS (17 Feb 2022)
+units 		metal
+dimension 	3
+boundary 	p p p
+
+atom_style 	spin
+
+# necessary for the serial algorithm (sametag)
+atom_modify 	map array
+read_data 	Norm_randXY_8x8x32.data
+Reading data file ...
+  orthogonal box = (0 0 0) to (28.32 28.32 113.28)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  8192 atoms
+  read_data CPU = 0.030 seconds
+
+mass		1 58.93
+
+pair_style 	hybrid/overlay eam/alloy spin/exchange 4.0
+ERROR: Unrecognized pair style 'eam/alloy' is part of the MANYBODY package which is not enabled in this LAMMPS binary. (../force.cpp:279)
+Last command: pair_style 	hybrid/overlay eam/alloy spin/exchange 4.0

@@ -1,0 +1,28 @@
+LAMMPS (17 Feb 2022)
+# start a spin-lattice simulation from a data file
+units 		metal
+atom_style 	spin
+
+dimension 	3
+boundary 	p p p
+
+# necessary for the serial algorithm (sametag)
+atom_modify 	map array
+
+read_restart	restart_hcp_cobalt.equil
+Reading restart file ...
+  restart file = 17 Feb 2022, LAMMPS = 17 Feb 2022
+  restoring atom style spin from restart
+  orthogonal box = (0 0 0) to (12.5355 21.712123 20.470386)
+  1 by 1 by 1 MPI processor grid
+  restoring pair style spin/exchange from restart
+  500 atoms
+  read_restart CPU = 0.002 seconds
+
+# setting mass, mag. moments, and interactions
+
+mass		1 58.93
+
+pair_style 	hybrid/overlay eam/alloy spin/exchange 4.0
+ERROR: Unrecognized pair style 'eam/alloy' is part of the MANYBODY package which is not enabled in this LAMMPS binary. (../force.cpp:279)
+Last command: pair_style 	hybrid/overlay eam/alloy spin/exchange 4.0

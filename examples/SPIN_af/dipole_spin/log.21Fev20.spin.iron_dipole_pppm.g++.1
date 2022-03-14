@@ -1,0 +1,43 @@
+LAMMPS (17 Feb 2022)
+# bcc iron in a 3d periodic box
+
+clear
+units 		metal
+atom_style 	spin
+
+dimension 	3
+boundary 	p p p
+
+# necessary for the serial algorithm (sametag)
+atom_modify 	map array
+
+lattice 	bcc 2.8665
+Lattice spacing in x,y,z = 2.8665 2.8665 2.8665
+region 		box block 0.0 12.0 0.0 12.0 0.0 12.0
+create_box 	1 box
+Created orthogonal box = (0 0 0) to (34.398 34.398 34.398)
+  1 by 1 by 1 MPI processor grid
+create_atoms 	1 box
+Created 3456 atoms
+  using lattice units in orthogonal box = (0 0 0) to (34.398 34.398 34.398)
+  create_atoms CPU = 0.001 seconds
+
+# setting mass, mag. moments, and interactions for bcc iron
+
+mass		1 55.845
+set 		group all spin 2.2 -1.0 0.0 0.0
+Setting atom values ...
+  3456 settings made for spin
+velocity 	all create 100 4928459 rot yes dist gaussian
+
+pair_style 	hybrid/overlay eam/alloy spin/exchange 3.5 spin/dipole/long 8.0
+pair_coeff 	* * eam/alloy Fe_Mishin2006.eam.alloy Fe
+pair_coeff 	* * spin/exchange exchange 3.4 0.02726 0.2171 1.841
+pair_coeff	* * spin/dipole/long 8.0
+
+neighbor 	0.1 bin
+neigh_modify 	every 10 check yes delay 20
+
+kspace_style 	pppm/dipole/spin 1.0e-4
+ERROR: Unrecognized kspace style 'pppm/dipole/spin' is part of the KSPACE package which is not enabled in this LAMMPS binary. (../force.cpp:654)
+Last command: kspace_style 	pppm/dipole/spin 1.0e-4
